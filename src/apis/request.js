@@ -1,0 +1,13 @@
+import axios from 'axios';
+
+export const requestAPI = ({ headers }) => {
+  return axios.create({
+    baseURL: ``,
+    timeout: 10000,
+    headers,
+  });
+};
+
+export default {
+  requestAPI,
+};
