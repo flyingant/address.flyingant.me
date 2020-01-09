@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const extractCustomerStyle = new ExtractTextPlugin('style.css');
 const extractTailwindCSS = new ExtractTextPlugin('tailwind.css');
 
@@ -83,10 +82,6 @@ module.exports = {
     publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.min.js',
-  },
-
-  optimization: {
-    minimizer: [new UglifyJsPlugin()],
   },
 
   plugins: [
