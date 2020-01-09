@@ -93,5 +93,6 @@ module.exports = {
       template: 'src/templates/index.html',
     }),
     new CopyWebpackPlugin([{ from: './src/assets', to: './assets' }]),
+    new CopyWebpackPlugin([{ from: './src/_redirects', to: './' }]),
   ],
 };
