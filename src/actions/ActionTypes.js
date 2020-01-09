@@ -12,6 +12,8 @@ export const APP = createActionTypes(['INITIALIZE', 'INITIALIZE_COMPLETED']);
 
 export const UI = createActionTypes(['BUSY', 'BUSY_COMPLETED']);
 
+export const ERROR = createActionTypes(['POPUP_ERROR', 'DISMISS_ERROR']);
+
 export const USER = createActionTypes(['AUTH_CHECK', 'LOGIN', 'LOGOUT', 'LOGIN_COMPLETED', 'LOGIN_FAILED', 'LOGOUT_COMPLETED']);
 
 export const ADDRESS = createActionTypes(['LOAD_ADDRESS', 'LOAD_ADDRESS_COMPLETED']);

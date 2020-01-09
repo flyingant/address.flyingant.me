@@ -1,7 +1,8 @@
 /* eslint-disable no-case-declarations */
 import Immutable from 'immutable';
 import moment from 'moment';
-import { APP, USER, ADDRESS } from '../actions/ActionTypes';
+import log from '../utils/logger';
+import { APP, USER, ADDRESS, ERROR } from '../actions/ActionTypes';
 import { LOCALSTORAGE_KEY_FOR_CREDENTIAL } from '../constants';
 
 const DEFAULT_APP_STATE = {
@@ -10,6 +11,7 @@ const DEFAULT_APP_STATE = {
   loginErrorMessage: null,
   message: '',
   addressBook: [],
+  error: {},
 };
 
 export default (state, action) => {
@@ -45,6 +47,11 @@ export default (state, action) => {
       });
     case USER.LOGOUT_COMPLETED:
       return currentState.merge({ loggedIn: false });
+    case ERROR.POPUP_ERROR:
+      log('Error:', action.payload);
+      return currentState.merge({ error: action.payload });
+    case ERROR.DISMISS_ERROR:
+      return currentState.merge({ error: {} });
     default:
       return currentState;
   }

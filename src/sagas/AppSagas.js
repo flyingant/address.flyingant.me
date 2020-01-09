@@ -2,11 +2,11 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 import { APP, USER, ADDRESS } from '../actions/ActionTypes';
 import { initializeCompleted } from '../actions/AppActions';
 import { busy, busyCompleted } from '../actions/UIActions';
+import { popupError } from '../actions/ErrorActions';
 import { loginFailed, loginCompleted, logoutCompleted } from '../actions/UserActions';
 import { loadAddressCompleted } from '../actions/AddressActions';
 import { loadAddressBook, login } from '../apis/app';
 import { LOCALSTORAGE_KEY_FOR_CREDENTIAL } from '../constants';
-import log from '../utils/logger';
 
 function* handleInitialize() {
   try {
@@ -14,6 +14,12 @@ function* handleInitialize() {
     yield put(initializeCompleted());
     yield put(busyCompleted());
   } catch (e) {
+    yield put(
+      popupError({
+        message: 'Failed to initialize the app',
+        event: e,
+      })
+    );
     yield put(busyCompleted());
   }
 }
@@ -35,13 +41,18 @@ function* handleUserLogin(action) {
     } else {
       yield put(
         loginFailed({
-          message: 'Login Failed',
+          message: 'Failed to login',
         })
       );
     }
     yield put(busyCompleted());
   } catch (e) {
-    log('Errors:', e);
+    yield put(
+      popupError({
+        message: 'Failed to log in',
+        event: e,
+      })
+    );
     yield put(busyCompleted());
   }
 }
@@ -61,11 +72,15 @@ function* handleLoadAddress() {
   try {
     yield put(busy());
     const results = yield call(loadAddressBook);
-    console.log('Results:', results);
     yield put(loadAddressCompleted(results.data.data));
     yield put(busyCompleted());
   } catch (e) {
-    console.log('Error:', e);
+    yield put(
+      popupError({
+        message: 'Failed to load address!',
+        event: e,
+      })
+    );
     yield put(busyCompleted());
   }
 }

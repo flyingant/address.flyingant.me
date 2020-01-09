@@ -7,6 +7,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAddressBook, faLockOpen, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import BusySpinner from '../components/BusySpinner';
 
 import UserActions from '../actions/UserActions';
 
@@ -30,16 +33,20 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    const { app } = this.props;
+    const { app, ui } = this.props;
     const { loggedIn, loginError, loginErrorMessage } = app.toJS();
+    const { loading } = ui.toJS();
     const { username, password } = this.state;
     if (loggedIn) return <Redirect to={{ pathname: '/home' }} />; // if user is logged in, then redirect to home page
     return (
       <div className="w-screen h-screen flex items-center justify-center">
+        <BusySpinner busy={loading} />
         <div className="w-64 shadow p-4 m-auto flex flex-col items-center justify-center">
-          <img className="mb-8" width="108" height="64" alt="logo" src="https://via.placeholder.com/108x64" />
-          <div className="w-full mb-8 px-12">
-            <div className="flex items-center border-b-2 border-gray">
+          <h4 className="font-bold">
+            <FontAwesomeIcon className="text-xl" icon={faAddressBook} />
+          </h4>
+          <div className="w-full mb-4 px-12">
+            <div className="flex items-center">
               <input
                 className="appearance-none w-full py-4 px-4 text-center text-sm text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black-500"
                 type="text"
@@ -57,7 +64,7 @@ class LoginPage extends React.Component {
                 type="password"
                 name="password"
                 autoComplete="off"
-                placeholder="密码"
+                placeholder="Password"
                 onChange={(e) => {
                   this.setState({
                     password: e.target.value,
@@ -68,14 +75,14 @@ class LoginPage extends React.Component {
             </div>
           </div>
           {loginError && (
-            <div className="w-full mb-8 px-12">
-              <p className="text-red-500">{loginErrorMessage}</p>
+            <div className="w-full mb-8 px-12 text-center">
+              <FontAwesomeIcon className="text-xl" icon={faTimesCircle} />
             </div>
           )}
           <div className="w-full mb-8 px-12">
-            <button className="w-full bg-black hover:bg-gray-700 text-white font-bold py-2 px-2 rounded" type="button" onClick={this.login}>
-              登录
-            </button>
+            <div className="w-full bg-black hover:bg-gray-700 text-white font-bold px-1 py-2 text-center cursor-pointer rounded" onClick={this.login}>
+              <FontAwesomeIcon className="text-xl text-white" icon={faLockOpen} />
+            </div>
           </div>
         </div>
       </div>
@@ -86,6 +93,7 @@ class LoginPage extends React.Component {
 export default connect(
   (state) => ({
     app: state.app,
+    ui: state.ui,
   }),
   (dispatch) => ({
     actions: bindActionCreators({ ...UserActions }, dispatch),
