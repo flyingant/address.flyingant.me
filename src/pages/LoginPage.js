@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressBook, faLockOpen, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import BusySpinner from '../components/BusySpinner';
 
+import AppActions from '../actions/AppActions';
 import UserActions from '../actions/UserActions';
 
 class LoginPage extends React.Component {
@@ -21,6 +22,18 @@ class LoginPage extends React.Component {
       password: '',
     };
     this.login = this.login.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
+  }
+
+  componentDidMount() {
+    const { actions } = this.props;
+    actions.initialize();
+  }
+
+  onKeyPress(e) {
+    if (e.keyCode === 13) {
+      this.login();
+    }
   }
 
   login() {
@@ -34,7 +47,7 @@ class LoginPage extends React.Component {
 
   render() {
     const { app, ui } = this.props;
-    const { loggedIn, loginError, loginErrorMessage } = app.toJS();
+    const { loggedIn, loginError } = app.toJS();
     const { loading } = ui.toJS();
     const { username, password } = this.state;
     if (loggedIn) return <Redirect to={{ pathname: '/home' }} />; // if user is logged in, then redirect to home page
@@ -65,6 +78,7 @@ class LoginPage extends React.Component {
                 name="password"
                 autoComplete="off"
                 placeholder="Password"
+                onKeyDown={this.onKeyPress}
                 onChange={(e) => {
                   this.setState({
                     password: e.target.value,
@@ -76,7 +90,7 @@ class LoginPage extends React.Component {
           </div>
           {loginError && (
             <div className="w-full mb-8 px-12 text-center">
-              <FontAwesomeIcon className="text-xl" icon={faTimesCircle} />
+              <FontAwesomeIcon className="text-xl text-red-500" icon={faTimesCircle} />
             </div>
           )}
           <div className="w-full mb-8 px-12">
@@ -96,6 +110,6 @@ export default connect(
     ui: state.ui,
   }),
   (dispatch) => ({
-    actions: bindActionCreators({ ...UserActions }, dispatch),
+    actions: bindActionCreators({ ...UserActions, ...AppActions }, dispatch),
   })
 )(LoginPage);
