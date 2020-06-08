@@ -1,6 +1,6 @@
-# React App boilerplate
+# MaYi's Address Book
 
-React page boilerplate is the boilerplate to help me building a web page by react quickly with the help by webpack and scss.
+A simple React App help MaYi to display all address book
 
 ## Getting Started
 
@@ -21,6 +21,7 @@ yarn or npm
 
 1.0.0 (last update: 2019-02-11)
 2.0.0 (last update: 2019-12-08) #add the eslint and perttier support to the project
+2.1.0 (last update: 2020-06-08) #Resolve the issue that login will failed when first called the API
 
 ## Developers
 
