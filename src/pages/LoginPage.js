@@ -55,7 +55,7 @@ class LoginPage extends React.Component {
       <div className="w-screen h-screen flex items-center justify-center">
         <BusySpinner busy={loading} />
         <div className="w-64 shadow p-4 m-auto flex flex-col items-center justify-center">
-          <h4 className="font-bold">
+          <h4 className="font-bold mb-2">
             <FontAwesomeIcon className="text-xl" icon={faAddressBook} />
           </h4>
           <div className="w-full mb-4 px-12">

@@ -41,7 +41,7 @@
     "husky": ">=1",
     "json-loader": "^0.5.7",
     "lint-staged": ">=8",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.0",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.2.1",
     "prettier": "^1.19.1",

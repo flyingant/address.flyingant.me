@@ -11,7 +11,6 @@ import { LOCALSTORAGE_KEY_FOR_CREDENTIAL } from '../constants';
 function* handleInitialize() {
   try {
     yield put(busy());
-    yield call(login, { username: 'awkae-function', password: 'awkae-function' });
     yield put(initializeCompleted());
     yield put(busyCompleted());
   } catch (e) {
